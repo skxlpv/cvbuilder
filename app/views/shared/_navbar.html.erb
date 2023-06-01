@@ -1,0 +1,53 @@
+<style>
+    body{
+        margin: 0;
+    }
+
+    .container {
+        outline: 1px solid black;
+        margin: 0;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+    }
+
+    .navbar li {
+        margin-left: 10px;
+    }
+
+    .navbar h1 {
+        margin: 0;
+        margin-right: auto;
+    }
+
+    .plain-text{
+        text-decoration:none;
+        color: black;
+    }
+</style>
+
+<div class="container">
+    <div class="navbar">
+        <h1><a class="plain-text" href="/">CV BUILDER</a></h1>
+        <ul>
+        <% if @current_user %>
+            <li><%= @current_user.email%></li>
+            <li><%= button_to "Log Out", logout_path,  method: :delete %></li>
+        <% else %>
+            <li class="plain-link"><%= link_to "Sign Up!", sign_up_path %></li>
+            <li class="plain-link"><%= link_to "Sign In!", sign_in_path %></li>
+        <% end %>
+        </ul>
+    </div>
+</div>

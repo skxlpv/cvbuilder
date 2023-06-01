@@ -1,0 +1,21 @@
+<%= render 'shared/navbar', locals: { current_user: @current_user}%>
+
+<style>
+  .content {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+</style>
+
+<div class="content">
+  <h1>Home!</h1>
+  <header>You're at home page!</header>
+  <p>Users in the database:</p>
+  <ul>
+    <% @users.each do |user| %>
+      <li><%= user.email %></li>
+    <% end %>
+  </ul>
+</div>
+

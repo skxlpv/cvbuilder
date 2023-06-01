@@ -1,0 +1,37 @@
+<%= render 'shared/navbar', locals: { current_user: @current_user} %>
+<style>
+  .content {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+</style>
+
+<div class="content">
+<h1>Sign IN page</h1>
+
+<%= form_with model: @user, url: sign_in_path do |f|  %>
+    <div style="
+    display: flex;
+    flex-direction: column;
+    ">
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+    </div>
+    <div style="
+    display: flex;
+    flex-direction: column;
+    ">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+    </div>
+    <div style="
+    display: flex;
+    flex-direction: column;
+    ">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+    </div>
+    <%= f.submit "Sign In" %>
+<% end %>
+</div>
