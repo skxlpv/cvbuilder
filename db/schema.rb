@@ -10,15 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_154809) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_02_000511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.date "deadline"
+    t.bigint "technologies_id"
+    t.bigint "workers_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["technologies_id"], name: "index_projects_on_technologies_id"
+    t.index ["workers_id"], name: "index_projects_on_workers_id"
+  end
+
+  create_table "technologies", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "tech_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
+    t.string "first_name"
+    t.string "surname"
+    t.string "age"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "workers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "technologies_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["technologies_id"], name: "index_workers_on_technologies_id"
+    t.index ["user_id"], name: "index_workers_on_user_id"
+  end
+
+  add_foreign_key "projects", "technologies", column: "technologies_id"
+  add_foreign_key "projects", "workers", column: "workers_id"
+  add_foreign_key "workers", "technologies", column: "technologies_id"
+  add_foreign_key "workers", "users"
 end

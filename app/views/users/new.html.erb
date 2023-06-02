@@ -4,6 +4,10 @@
     margin-left: 20px;
     margin-right: 20px;
   }
+  .input-div{
+    display: flex;
+    flex-direction: column;
+  }
 
 </style>
 
@@ -24,26 +28,21 @@
 
 <div>
 <%= form_with model: @user, url: sign_up_path do |f|  %>
-    <div style="
-    display: flex;
-    flex-direction: column;
-    ">
+    <div class="input-div">
         <%= f.label :email %>
         <%= f.text_field :email %>
     </div>
-    <div style="
-    display: flex;
-    flex-direction: column;
-    ">
+    <div class='input-div'>
         <%= f.label :password %>
         <%= f.password_field :password %>
     </div>
-    <div style="
-    display: flex;
-    flex-direction: column;
-    ">
+    <div class='input-div'>
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation %>
+    </div>
+    <div class='input-div'>
+        <%= f.label :age %>
+        <%= f.number_field :age %>
     </div>
     <%= f.submit "Sign Up" %>
 <% end %>
