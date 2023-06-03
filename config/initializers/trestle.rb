@@ -21,8 +21,7 @@ Trestle.configure do |config|
 
   # Set the text shown in the page footer within the admin.
   # Defaults to 'Powered by Trestle'.
-  #
-  # config.footer = "Powered by Trestle"
+  config.footer = "copyright 2023"
 
   # Sets the default precision for timestamps (either :minutes or :seconds).
   # Defaults to :minutes.
@@ -74,9 +73,9 @@ Trestle.configure do |config|
 
   # Register callbacks to run before, after or around all Trestle actions.
   #
-  # config.before_action do |controller|
-  #   Rails.logger.debug("Before action")
-  # end
+  config.before_action do |controller|
+    Rails.logger.debug("Before action")
+  end
   #
   # config.after_action do |controller|
   #   Rails.logger.debug("After action")
@@ -136,28 +135,28 @@ Trestle.configure do |config|
   #
   # Specify the user class to be used by trestle-auth.
   #
-  config.auth.user_class = -> { User }
+  # config.auth.user_class = -> { User }
 
   # Specify the scope for valid admin users.
   # Defaults to config.auth.user_class (unscoped).
   #
-  # config.auth.user_scope = -> { User.where(admin: true) }
+  config.auth.user_scope = -> { User.where(admin: true) }
 
   # Specify the Trestle admin for managing the current user (My Account).
   #
-  config.auth.user_admin = -> { :"auth/account" }
+  # config.auth.user_admin = -> { :"auth/account" }
 
   # Specify the parameter (along with a password) to be used to
   # authenticate an administrator. Defaults to :email.
   #
-  # config.auth.authenticate_with = :login
+  config.auth.authenticate_with = :login
 
   # Customize the method for authenticating a user given login parameters.
   # The block should return an instance of the auth user class, or nil.
   #
-  # config.auth.authenticate = ->(params) {
-  #   User.authenticate(params[:login], params[:password])
-  # }
+  config.auth.authenticate = ->(params) {
+    User.authenticate(params[:login], params[:password])
+  }
 
   # Customize the method for finding a user given an ID from the session.
   # The block should return an instance of the auth user class, or nil.

@@ -28,6 +28,20 @@
 
 <div>
 <%= form_with model: @user, url: sign_up_path do |f|  %>
+
+    <div class='input-div'>
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name %>
+    </div>
+    <div class='input-div'>
+        <%= f.label :surname %>
+        <%= f.text_field :surname %>
+    </div>
+    <div class='input-div'>
+        <%= f.label :age %>
+        <%= f.text_field :age %>
+    </div><br><br>
+
     <div class="input-div">
         <%= f.label :email %>
         <%= f.text_field :email %>
@@ -40,10 +54,7 @@
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation %>
     </div>
-    <div class='input-div'>
-        <%= f.label :age %>
-        <%= f.number_field :age %>
-    </div>
+
     <%= f.submit "Sign Up" %>
 <% end %>
 </div>

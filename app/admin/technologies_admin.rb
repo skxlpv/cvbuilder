@@ -8,7 +8,6 @@ Trestle.resource(:technologies) do
   table do
     column :name
     column :description
-    column :tech_type
     column :created_at, align: :center
     actions
   end
@@ -16,10 +15,10 @@ Trestle.resource(:technologies) do
   # Customize the form fields shown on the new/edit views.
   
   form do |technology|
+    select :tech_type, Technology.enum_options
     text_field :name
     text_field :description
-    select :tech_type, options_for_select(Technology.tech_types.keys.map { |key| [key.titleize, key] })
-  
+
     row do
       col { datetime_field :updated_at }
       col { datetime_field :created_at }

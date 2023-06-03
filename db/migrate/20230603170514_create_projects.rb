@@ -4,8 +4,8 @@ class CreateProjects < ActiveRecord::Migration[7.0]
       t.string :title
       t.text :description
       t.date :deadline
-      t.references :technologies, null: true, foreign_key: true
-      t.references :workers, null: true, foreign_key: true
+      t.bigint :technologies_ids, array: true, default: [], null: true
+      t.bigint :workers_ids, array: true, default: [], null: true
 
       t.timestamps
     end
