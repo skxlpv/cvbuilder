@@ -5,6 +5,20 @@ Trestle.resource(:users, model: User, scope: Auth) do
     end
   end
 
+  search do |query|
+    if query
+      collection.where(
+        "first_name ILIKE ? OR 
+        surname ILIKE ? OR 
+        email ILIKE ? OR 
+        age ILIKE ?",
+        "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+      )
+    else
+      collection
+    end
+  end
+
   table do
     column :avatar, header: false do |user|
       avatar_for(user)

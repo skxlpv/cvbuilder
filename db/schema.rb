@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_03_170514) do
     t.string "age"
     t.string "password_digest"
     t.string "remember_token"
-    t.string "remember_token_expires_at"
+    t.datetime "remember_token_expires_at"
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

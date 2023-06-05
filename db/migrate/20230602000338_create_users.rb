@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :age
       t.string :password_digest
       t.string :remember_token
-      t.string :remember_token_expires_at
+      t.datetime :remember_token_expires_at
       t.boolean :admin, default: false
 
       t.timestamps

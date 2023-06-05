@@ -3,6 +3,18 @@ Trestle.resource(:projects) do
     item :projects, icon: "fa fa-star"
   end
 
+  search do |query|
+    if query
+      collection.where(
+        "title ILIKE ? OR 
+        description ILIKE ?",
+        "%#{query}%", "%#{query}%"
+      )
+    else
+      collection
+    end
+  end
+
   # View records
   table do
     column :title

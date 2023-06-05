@@ -44,8 +44,8 @@ gem "bootsnap", require: false
 
 # Trestle
 gem 'trestle', '~> 0.9.8'
-
 gem 'trestle-auth'
+gem 'trestle-search'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

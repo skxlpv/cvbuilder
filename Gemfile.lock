@@ -204,6 +204,8 @@ GEM
     trestle-auth (0.4.4)
       bcrypt (~> 3.1.7)
       trestle (~> 0.9.0, >= 0.9.3)
+    trestle-search (0.4.3)
+      trestle (~> 0.9.0, >= 0.9.3)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
@@ -245,6 +247,7 @@ DEPENDENCIES
   stimulus-rails
   trestle (~> 0.9.8)
   trestle-auth
+  trestle-search
   turbo-rails
   tzinfo-data
   web-console

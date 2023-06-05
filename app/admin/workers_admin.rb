@@ -3,19 +3,31 @@ Trestle.resource(:workers) do
     item :workers, icon: "fa fa-star"
   end
 
-  # Customize the table columns shown on the index view.
-  #
+  search do |query|
+    if query
+      collection.joins(:user).where(
+        "users.first_name ILIKE ? OR 
+        users.surname ILIKE ? OR 
+        users.email ILIKE ? OR
+        users.age ILIKE ?", 
+        "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+    else
+      collection
+    end
+  end
+
+
   table do
-    column :user_id, header: 'First name' do |worker|
+    column :user_id, sort: :age, header: 'First name' do |worker|
       worker.user.first_name
     end
-    column :user_id, header: 'Surname' do |worker|
+    column :user_id, sort: :age, header: 'Surname' do |worker|
       worker.user.surname
     end
-    column :user_id, header: 'Email' do |worker|
+    column :user_id, sort: :age, link: true, header: 'Email' do |worker|
       worker.user.email
     end
-    column :user_id, header: 'Age' do |worker|
+    column :user_id, sort: :age, header: 'Age' do |worker|
       worker.user.age
     end
     column :created_at, align: :center
@@ -34,15 +46,4 @@ Trestle.resource(:workers) do
     end
   end
   
-
-  # By default, all parameters passed to the update and create actions will be
-  # permitted. If you do not have full trust in your users, you should explicitly
-  # define the list of permitted parameters.
-  #
-  # For further information, see the Rails documentation on Strong Parameters:
-  #   http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
-  #
-  # params do |params|
-  #   params.require(:worker).permit(:name, ...)
-  # end
 end

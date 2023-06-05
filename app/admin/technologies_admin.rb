@@ -3,12 +3,24 @@ Trestle.resource(:technologies) do
     item :technologies, icon: "fa fa-star"
   end
 
-  # Customize the table columns shown on the index view.
+  search do |query|
+    if query
+      collection.where(
+        "name ILIKE :query OR 
+        tech_type = :tech_type", 
+        query: "%#{query}%", 
+        tech_type: Technology.tech_types[query.to_sym]
+      )
+    else
+      collection
+    end
+  end
   
   table do
     column :name
-    column :description
+    column :description, sort: false
     column :created_at, align: :center
+    column :tech_type
     actions
   end
 
