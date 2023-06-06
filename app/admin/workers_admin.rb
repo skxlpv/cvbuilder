@@ -45,5 +45,23 @@ Trestle.resource(:workers) do
       col { datetime_field :created_at }
     end
   end
-  
+
+
+  controller do
+    def show
+      toolbar(:primary) do |t|
+        t.link("Generate PDF", instance, action: :generate_pdf, method: :post, icon: "fa fa-check")
+      end
+    end
+
+    def generate_pdf
+      # TODO:
+      # 1. Fill the template with all the user info
+      # 2. Download html template
+    end
+  end
+
+  routes do
+    post :generate_pdf, on: :member
+  end  
 end
