@@ -1,3 +1,18 @@
+class PdfController < ApplicationController
+  def generate_pdf
+    pdf = Prawn::Document.new
+
+    pdf.text 'This is a Heading', size: 18, style: :bold, align: :center, margin_bottom: 10
+    pdf.text 'This is a paragraph of text.', size: 12, align: :justify, margin_bottom: 20
+
+    pdf.font('Helvetica') do
+      pdf.text 'This is some text with a custom font.'
+    end
+
+    pdf.render_file('output.pdf')
+  end
+end
+
 Trestle.resource(:workers) do
   menu do
     item :workers, icon: "fa fa-star"
@@ -53,12 +68,11 @@ Trestle.resource(:workers) do
         t.link("Generate PDF", instance, action: :generate_pdf, method: :post, icon: "fa fa-check")
       end
     end
-
-    def generate_pdf
-      # TODO:
-      # 1. Fill the template with all the user info
-      # 2. Download html template
+    
+    def generate_pdf      
+      PdfController.new.generate_pdf
     end
+    
   end
 
   routes do
