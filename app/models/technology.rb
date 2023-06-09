@@ -1,4 +1,5 @@
 class Technology < ApplicationRecord
+    has_and_belongs_to_many :workers
     enum tech_type: {
         programming_language: 0,
         framework: 1,

@@ -16,7 +16,6 @@ Trestle.resource(:workers) do
     end
   end
 
-
   table do
     column :user_id, sort: :age, header: 'First name' do |worker|
       worker.user.first_name
@@ -34,11 +33,9 @@ Trestle.resource(:workers) do
     actions
   end
 
-  # Customize the form fields shown on the new/edit views.
-  #
   form do |worker|
     text_field :user_id, label: 'User id', readonly: true
-    select :technologies_id, Technology.all.map { |tech_type| [tech_type.name, tech_type.id] }, { label: 'Technology stack' }, { multiple: true }
+    select :technology_ids, Technology.all, { label: "Technologies" }, {multiple: true}
     
     row do
       col { datetime_field :updated_at }
