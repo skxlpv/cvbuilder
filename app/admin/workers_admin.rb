@@ -52,24 +52,13 @@ Trestle.resource(:workers) do
     end
     
     def generate_pdf      
-      options = {
-        page_size: 'A4',
-        disable_smart_shrinking: true,
-      }
-
       worker = Worker.find(params[:id])
 
-      html_template = File.read('/home/skxlpv/OWN/cvbuilder/app/views/shared/cv_template.html.erb')
-      html = html_template.gsub('{worker_name}', worker.user.first_name)
-      
-      pdfkit = PDFKit.new(html, options)
-      pdf_data = pdfkit.to_pdf
-      
-      File.open("/home/skxlpv/OWN/cvbuilder/public/pdfs/cv_#{worker.user.first_name}.pdf", 'wb') do |file|
-        file << pdf_data
-      end
-      
-      send_data pdf_data, filename: 'pdf.pdf', type: 'application/pdf', disposition: 'inline'
+      HtmlToPdfJob.perform_later(worker=worker)
+
+      pdf_filename = "cv_#{worker.user.first_name}.pdf"
+      pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)
+      send_file pdf_path, filename: pdf_filename, type: 'application/pdf', disposition: 'inline'
     end
   end
 
