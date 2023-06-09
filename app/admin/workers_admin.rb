@@ -51,11 +51,11 @@ Trestle.resource(:workers) do
       end
     end
     
-    def generate_pdf      
+    def generate_pdf
       worker = Worker.find(params[:id])
-
-      HtmlToPdfJob.perform_later(worker=worker)
-
+      
+      HtmlToPdfJob.perform_async(worker_id=worker.id)
+      
       pdf_filename = "cv_#{worker.user.first_name}.pdf"
       pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)
       send_file pdf_path, filename: pdf_filename, type: 'application/pdf', disposition: 'inline'
