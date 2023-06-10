@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_191609) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_10_204300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "educations", force: :cascade do |t|
+    t.string "location"
+    t.string "degree"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "educations_workers", id: false, force: :cascade do |t|
+    t.bigint "worker_id", null: false
+    t.bigint "education_id", null: false
+    t.index ["education_id", "worker_id"], name: "index_educations_workers_on_education_id_and_worker_id"
+    t.index ["worker_id", "education_id"], name: "index_educations_workers_on_worker_id_and_education_id"
+  end
 
   create_table "languages", force: :cascade do |t|
     t.string "name"
@@ -70,17 +86,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_191609) do
     t.bigint "user_id", null: false
     t.bigint "technologies_id"
     t.bigint "languages_id"
+    t.bigint "educations_id"
     t.string "phone_number"
     t.string "summary"
     t.text "skills"
-    t.text "personal_achievements"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["educations_id"], name: "index_workers_on_educations_id"
     t.index ["languages_id"], name: "index_workers_on_languages_id"
     t.index ["technologies_id"], name: "index_workers_on_technologies_id"
     t.index ["user_id"], name: "index_workers_on_user_id"
   end
 
+  add_foreign_key "workers", "educations", column: "educations_id"
   add_foreign_key "workers", "languages", column: "languages_id"
   add_foreign_key "workers", "technologies", column: "technologies_id"
   add_foreign_key "workers", "users"

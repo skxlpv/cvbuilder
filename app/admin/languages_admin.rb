@@ -14,8 +14,8 @@ Trestle.resource(:languages) do
   end
 
   form do |language|
-    select :name, Language.enum_language_names_options
-    select :level, Language.enum_levels_options
+    text_field :name
+    # select :level, Language.enum_levels_options
     
     row do
       col { datetime_field :updated_at }
