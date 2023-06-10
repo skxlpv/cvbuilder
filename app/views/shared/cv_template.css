@@ -1,0 +1,39 @@
+html{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    background-color: red;
+    display: flex;
+}
+
+.left{
+    background-color: rgb(25, 27, 30);
+    color: white;
+
+    width: 200px;
+    height: 500px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 80px;
+
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+
+
+}
+
+.left h2{
+    margin: 0;
+}
+
+.right{
+    background-color: green;
+}

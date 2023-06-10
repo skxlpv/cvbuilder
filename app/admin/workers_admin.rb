@@ -34,8 +34,12 @@ Trestle.resource(:workers) do
   end
 
   form do |worker|
-    text_field :user_id, label: 'User id', readonly: true
-    select :technology_ids, Technology.all, { label: "Technologies" }, {multiple: true}
+    text_field :user_id, label: 'User id', readonly: true    
+    text_field :phone_number
+    text_area :summary, label: 'Worker summary'
+    text_field :personal_achievements
+    select :language_ids, Language.all.map { |language| ["#{language.name}, #{language.level}", language.id] }, { label: "Language(-s)" }, { multiple: true }
+    select :technology_ids, Technology.all, { label: "Technology(-ies)" }, {multiple: true}
     
     row do
       col { datetime_field :updated_at }
