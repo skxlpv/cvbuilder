@@ -1,4 +1,6 @@
 Trestle.resource(:workers) do
+  remove_action :destroy
+  
   menu do
     item :workers, icon: "fa fa-star"
   end
@@ -37,9 +39,10 @@ Trestle.resource(:workers) do
     text_field :user_id, label: 'User id', readonly: true    
     text_field :phone_number
     text_area :summary, label: 'Worker summary'
-    select :education_ids, Education.all.map { |education| ["#{education.location}, #{education.degree}", education.id] }, { label: "Education" }, {multiple: true}
     select :language_ids, Language.all.map { |language| ["#{language.name}, #{language.level}", language.id] }, { label: "Languages" }, { multiple: true }
+    select :education_ids, Education.all.map { |education| ["#{education.location}, #{education.degree}", education.id] }, { label: "Education" }, {multiple: true}
     select :technology_ids, Technology.all, { label: "Technologies" }, {multiple: true}
+    collection_select(:experience_ids, Experience.all, :id, :title, {label: 'Work experiences'}, multiple: true)
     
     row do
       col { datetime_field :updated_at }

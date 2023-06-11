@@ -45,4 +45,20 @@ Trestle.resource(:users, model: User, scope: Auth) do
     end
     check_box :admin
   end
+
+  controller do
+    def create
+      @user = User.new(params.require(:user).permit(
+        :first_name, :surname, :email, :password, :password_confirmation, :age
+        )
+      )
+  
+      if @user.save
+        Worker.create(user: @user)
+      else
+        flash[:error] = "User creation failed"
+        raise ActiveRecord::Rollback
+      end
+    end
+  end
 end

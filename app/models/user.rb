@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   after_create :create_worker_record
   has_secure_password
+  has_one :worker, dependent: :destroy
+
   include Trestle::Auth::ModelMethods
   include Trestle::Auth::ModelMethods::Rememberable
   

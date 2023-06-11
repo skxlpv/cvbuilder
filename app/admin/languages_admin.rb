@@ -15,11 +15,18 @@ Trestle.resource(:languages) do
 
   form do |language|
     text_field :name
-    # select :level, Language.enum_levels_options
     
     row do
       col { datetime_field :updated_at }
       col { datetime_field :created_at }
+    end
+  end
+
+  controller do
+    def create
+      name = params[:language][:name]
+      Language.populate_language_levels(name=name)
+      flash[:info] = "Language was created successfully!"
     end
   end
 end

@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_204300) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_11_152933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "educations", force: :cascade do |t|
     t.string "location"
+    t.string "specialization"
     t.string "degree"
     t.date "start_date"
     t.date "end_date"
@@ -28,6 +29,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_204300) do
     t.bigint "education_id", null: false
     t.index ["education_id", "worker_id"], name: "index_educations_workers_on_education_id_and_worker_id"
     t.index ["worker_id", "education_id"], name: "index_educations_workers_on_worker_id_and_education_id"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.string "title"
+    t.string "project_description"
+    t.date "start_date"
+    t.date "end_date"
+    t.boolean "commercial"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "experiences_workers", id: false, force: :cascade do |t|
+    t.bigint "worker_id", null: false
+    t.bigint "experience_id", null: false
+    t.index ["experience_id", "worker_id"], name: "index_experiences_workers_on_experience_id_and_worker_id"
+    t.index ["worker_id", "experience_id"], name: "index_experiences_workers_on_worker_id_and_experience_id"
   end
 
   create_table "languages", force: :cascade do |t|

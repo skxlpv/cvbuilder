@@ -6,6 +6,7 @@ Trestle.resource(:educations) do
   table do
     column :location
     column :degree
+    column :specialization
     column :start_date
     column :end_date
     column :created_at, align: :center
@@ -15,6 +16,7 @@ Trestle.resource(:educations) do
   form do |education|
     text_field :location, label: 'Educational institution'
     select :degree, Education.enum_options
+    text_field :specialization
     date_field :start_date
     date_field :end_date
   

@@ -30,7 +30,7 @@ Trestle.resource(:projects) do
     text_field :description
     date_field :deadline
     select :technologies_ids, Technology.all.map{|tech_type| [tech_type.name, tech_type.id]}, {label: 'Technology stack'}, { multiple: true}
-    select :workers_ids, User.all.map{|user| [user.first_name, user.id]}, {label: 'Workers'}, { multiple: true}
+    select :workers_ids, Worker.all.map { |worker| ["#{worker.user.first_name} #{worker.user.surname}", worker.id] }, { label: 'Workers' }, { multiple: true }
 
     row do
       col { datetime_field :updated_at }
