@@ -1,3 +1,6 @@
+require 'sidekiq/api'
+
+
 Trestle.resource(:workers) do
   remove_action :destroy
   
@@ -33,6 +36,16 @@ Trestle.resource(:workers) do
     end
     column :created_at, align: :center
     actions
+
+    actions do |t, instance|
+      pdf_filename = "cv_#{instance.id}.pdf"
+      pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)
+  
+      if File.exist?(pdf_path)
+        t.link("Show PDF", instance, action: :generate_pdf, method: :post)
+      else
+      end
+    end
   end
 
   form do |worker|
@@ -53,21 +66,34 @@ Trestle.resource(:workers) do
 
   controller do
     def show
-      toolbar(:primary) do |t|
-        t.link("Generate PDF", instance, action: :generate_pdf, method: :post, icon: "fa fa-check")
+      toolbar(:primary) do |t|        
+        worker = Worker.find(params[:id])
+        pdf_filename = "cv_#{worker.id}.pdf"
+        pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)
+  
+        action_text = File.exist?(pdf_path)? 'Show' : 'Generate'
+        
+        t.link("#{action_text} PDF", instance, action: :generate_pdf, method: :post, icon: "fa fa-check")
       end
     end
     
     def generate_pdf
       worker = Worker.find(params[:id])
+      job_id = HtmlToPdfJob.perform_async(worker_id=worker.id)
       
-      HtmlToPdfJob.perform_async(worker_id=worker.id)
-      
-      pdf_filename = "cv_#{worker.user.first_name}.pdf"
+      pdf_filename = "cv_#{worker_id}.pdf"
       pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)
-      send_file pdf_path, filename: pdf_filename, type: 'application/pdf', disposition: 'inline'
+      show_cv(pdf_path, pdf_filename)
     end
-  end
+
+    def show_cv(path, name)
+      if File.exist?(path)
+        send_file path, filename: name, type: 'application/pdf', disposition: 'inline'
+      else
+        redirect_to workers_admin_index_path
+      end
+    end
+end
 
   routes do
     post :generate_pdf, on: :member

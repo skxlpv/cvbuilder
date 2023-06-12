@@ -1,23 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Worker CV</title>
+  <meta charset="utf-8">
+  <title>CV Template</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      display: block;
     }
-    h1 {
+
+    .left-container {
+      background-color: red;
+      width: 50%
+    }
+
+    .right-container {
+      background-color: green;
+      width: 50%
+    }
+
+    h2 {
       color: #333;
-      font-size: 24px;
+      font-size: 12px;
+    }
+
+    p {
+      color: #666;
+      font-size: 9px;
+    }
+
+    .section {
       margin-bottom: 20px;
+    }
+
+    .section h2 {
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      margin-bottom: 5px;
+      padding-left: 10px;
+    }
+
+    .languages {
+      margin-top: 10px;
+    }
+
+    .education {
+      margin-top: 10px;
+    }
+
+    .skills {
+      margin-top: 10px;
+    }
+
+    .experience {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Worker CV - {worker_name}</h1>
-  <p>
-    Here goes content
-  </p>
+  <div class="left-container">
+    <div class="section">
+      <h2>Personal information</h2>
+      <p>First Name: <%= @worker.user.first_name %></p>
+      <p>Surname: <%= @worker.user.surname %></p>
+      <p>Age: <%= @worker.user.age %></p>
+    </div>
+
+    <div class="section">
+      <h2>Contact information</h2>
+      <p>Email: <%= @worker.user.email %></p>
+      <p>Phone number: <%= @worker.phone_number %></p>
+    </div>
+  </div>
+
+  <div class="right-container">
+      <div class="section">
+      <h2>Summary</h2>
+      <p><%= @worker.summary %></p>
+    </div>
+
+    <div class="section">
+      <h2>Languages</h2>
+      <div class="languages">
+        <% @worker.language_ids.each do |language_id| %>
+          <% language = Language.find(language_id) %>
+          <p><%= language.name %> - <%= language.level %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Education</h2>
+      <div class="education">
+        <% @worker.education_ids.each do |education_id| %>
+          <% education = Education.find(education_id) %>
+          <p><%= education.location %> | <%= education.specialization %> (<%= education.degree %>)</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Skills and technologies</h2>
+      <div class="skills">
+        <% @worker.technology_ids.each do |technology_id| %>
+          <% technology = Technology.find(technology_id) %>
+          <p><%= "#{technology.name} (#{technology.tech_type == 'programming_language' ? 'programming language' : technology.tech_type})" %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Work experience</h2>
+      <div class="experience">
+        <% @worker.experience_ids.each do |experience_id| %>
+          <% experience = Experience.find(experience_id) %>
+          <p><%= "#{experience.title}" %></p>
+          <p><%= "#{experience.project_description}" %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
