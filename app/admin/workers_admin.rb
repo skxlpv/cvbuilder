@@ -41,9 +41,10 @@ Trestle.resource(:workers) do
       pdf_filename = "cv_#{instance.id}.pdf"
       pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)
   
-      if File.exist?(pdf_path)
-        t.link("Show PDF", instance, action: :generate_pdf, method: :post)
+      if File.exist?(pdf_path) == false
+        
       else
+        t.link("Show PDF", instance, action: :generate_pdf, method: :post)
       end
     end
   end
@@ -79,7 +80,7 @@ Trestle.resource(:workers) do
     
     def generate_pdf
       worker = Worker.find(params[:id])
-      job_id = HtmlToPdfJob.perform_async(worker_id=worker.id)
+      HtmlToPdfJob.perform_async(worker_id=worker.id)
       
       pdf_filename = "cv_#{worker_id}.pdf"
       pdf_path = Rails.root.join('public', 'pdfs', pdf_filename)

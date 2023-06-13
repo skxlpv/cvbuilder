@@ -4,19 +4,30 @@
   <meta charset="utf-8">
   <title>CV Template</title>
   <style>
+    html {
+      padding:0;
+      margin:0;
+    }
     body {
       font-family: Arial, sans-serif;
       display: block;
+      padding:0;
+      margin:0;
     }
 
     .left-container {
-      background-color: red;
-      width: 50%
+      width: 45%;
+      float: left;      
     }
 
     .right-container {
-      background-color: green;
-      width: 50%
+      width: 55%;
+      float: right;
+    }
+
+    .name {
+      padding:0;
+      margin:0;
     }
 
     h2 {
@@ -29,17 +40,25 @@
       font-size: 9px;
     }
 
+    hr {
+      color: black;
+    }
+
     .section {
       margin-bottom: 20px;
     }
 
     .section h2 {
-      margin-bottom: 10px;
+      padding:0;
+      margin:0;
+      margin-top: 5px;
     }
 
     .section p {
-      margin-bottom: 5px;
+      padding:0;
+      margin:0;
       padding-left: 10px;
+      padding-top: 5px;
     }
 
     .languages {
@@ -57,67 +76,70 @@
     .experience {
       margin-top: 10px;
     }
+
+    .experience-title {
+      margin-bottom:5px;
+    }
+
+    .experience-paragraph {
+      text-indent: 5px;
+      font-size: 8px;
+    }
   </style>
 </head>
 <body>
+  <div>
+    <h1 class="name"><%= @worker.user.first_name %> <%= @worker.user.surname %></h1>
+    <p><%= @worker.summary %></p>
+  </div>
+  <hr>
+
   <div class="left-container">
     <div class="section">
-      <h2>Personal information</h2>
-      <p>First Name: <%= @worker.user.first_name %></p>
-      <p>Surname: <%= @worker.user.surname %></p>
-      <p>Age: <%= @worker.user.age %></p>
-    </div>
-
-    <div class="section">
-      <h2>Contact information</h2>
-      <p>Email: <%= @worker.user.email %></p>
-      <p>Phone number: <%= @worker.phone_number %></p>
-    </div>
-  </div>
-
-  <div class="right-container">
-      <div class="section">
-      <h2>Summary</h2>
-      <p><%= @worker.summary %></p>
-    </div>
-
-    <div class="section">
       <h2>Languages</h2>
-      <div class="languages">
+      <div class="section">
         <% @worker.language_ids.each do |language_id| %>
           <% language = Language.find(language_id) %>
-          <p><%= language.name %> - <%= language.level %></p>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Education</h2>
-      <div class="education">
-        <% @worker.education_ids.each do |education_id| %>
-          <% education = Education.find(education_id) %>
-          <p><%= education.location %> | <%= education.specialization %> (<%= education.degree %>)</p>
+          <p>• <%= language.name %>: <%= language.level %></p>
         <% end %>
       </div>
     </div>
 
     <div class="section">
       <h2>Skills and technologies</h2>
-      <div class="skills">
+      <div class="section">
         <% @worker.technology_ids.each do |technology_id| %>
           <% technology = Technology.find(technology_id) %>
-          <p><%= "#{technology.name} (#{technology.tech_type == 'programming_language' ? 'programming language' : technology.tech_type})" %></p>
+          <p>• <%= "#{technology.name}" %></p>
         <% end %>
       </div>
     </div>
 
     <div class="section">
-      <h2>Work experience</h2>
-      <div class="experience">
+      <h2>Contact information</h2>
+      <p>Email: <%= @worker.user.email %></p>
+      <p>Phone: <%= @worker.phone_number %></p>
+    </div>
+  </div>
+
+  <div class="right-container">
+    <div class="section">
+      <h2>Education</h2>
+      <div class="section">
+        <% @worker.education_ids.each do |education_id| %>
+          <% education = Education.find(education_id) %>
+          <p>• <%= education.location %> | <%= education.specialization %> (<%= education.degree %>)</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Experience</h2>
+      <div class="section">
         <% @worker.experience_ids.each do |experience_id| %>
           <% experience = Experience.find(experience_id) %>
-          <p><%= "#{experience.title}" %></p>
-          <p><%= "#{experience.project_description}" %></p>
+          <p class="experience-title">• <%= "#{experience.title}" %></p>
+          <i><p class="experience-paragraph"><%= "#{experience.project_description}" %></p></i>
         <% end %>
       </div>
     </div>
